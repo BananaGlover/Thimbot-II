@@ -22,9 +22,9 @@ async def on_message(message: discord.Message):
         return
 
         #check if message is command
-    for cmd in os.listdir("commands"):
+    for cmd in os.listdir("discord_bot\commands"):
 
-        path = os.path.join("commands", cmd)
+        path = os.path.join("discord_bot\commands", cmd)
         if not os.path.isfile(path): continue
 
         if message.content == cmd[:-3]:
