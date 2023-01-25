@@ -1,7 +1,0 @@
-import discord
-
-call_name = [""]
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mentions: discord.Message.mentions, args: list[str]):
-    """
-    returns
-    """

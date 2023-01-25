@@ -1,10 +1,15 @@
 import discord
 
-call_name = ["penta"]
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mentions: discord.Message.mentions, args: list[str]):
-    """
-    returns
-    """
+context = {
+    "name": ["penta"],
+    "description": "",
+    "format": [
+        []
+    ],
+    "admin": True
+}
+
+async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mentions: discord.Message.mentions, args: list[int]):
 
     await message.channel.send("Shutting Off...")
 

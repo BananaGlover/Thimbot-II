@@ -1,0 +1,11 @@
+import discord
+
+context = {
+    "name": [""],
+    "description": "",
+    "format": [],
+    "admin": False
+}
+
+async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mention: discord.Message.mentions, args: list[int]):
+    pass
