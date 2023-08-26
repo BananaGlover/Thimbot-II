@@ -12,22 +12,23 @@ context = {
     "admin": False
 }
 
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mention: discord.Message.mentions, args: list[int], format: int):
+async def cmd(bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int], format: int):
+    
+    target = pfunc.define_target(mention, message.author)
+    target_member = message.guild.get_member(target['id'])
 
-    profile = pfunc.get_profile(message.author.id)
     stats = {
-        "Name": message.author.name,
-        "Thimbits": profile['bit'],
-        "Thimcoins": profile['coin'],
+        "Name": target_member.name,
+        "Thimbits": target['bit'],
+        "Thimcoins": target['coin'],
     }
 
     embed = discord.Embed(
-        title=f"{message.author.name}'s stats",
+        title=f"{target_member.name}'s stats",
         color=0xe4b634,
         timestamp=datetime.now()
     )
 
-    stats_str: str
     for key, value in stats.items():
         line = f"{key}: **{value}**"
         embed.add_field(name=line, value="** **", inline=False)

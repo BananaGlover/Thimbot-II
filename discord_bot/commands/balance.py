@@ -11,7 +11,7 @@ context = {
     "admin": False
 }
 
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int]):
+async def cmd(bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int], format: int):
 
     target = pfunc.define_target(mention, message.author)
 

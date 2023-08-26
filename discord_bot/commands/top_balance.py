@@ -11,8 +11,8 @@ context = {
     "admin": False
 }
 
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mentions: discord.Message.mentions, args: list[int]):
-
+async def cmd(bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int], format: int):
+    
     profiles = {profile['id']: profile['bit'] for profile in pfunc.get_profiles()}
     profiles_sorted = sorted(profiles.items(), key=lambda x:x[1] , reverse=True)
 

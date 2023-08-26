@@ -2,7 +2,7 @@
     {
         "name": "BananaGlove",
         "id": 608327970293284962,
-        "bit": 0,
+        "bit": 200014835,
         "coin": 0,
         "level": 1
     },
@@ -19,5 +19,11 @@
         "bit": 1101,
         "coin": 0,
         "level": 1
+    },
+    {
+        "name": "captainfil",
+        "id": 389179552703709195,
+        "bit": 0,
+        "coin": 0
     }
 ]

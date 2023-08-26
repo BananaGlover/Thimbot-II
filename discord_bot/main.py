@@ -61,43 +61,48 @@ async def on_message(message: discord.Message):
         #if given name is in command's names
         if message_cmd in cmd_import.context['name']:                
 
-            #assign mention
-            if message.mentions: mention = message.mentions[0]
-            else: mention = None
-
             pass_args: list[int] = []
             pass_mention = None
 
             #########################    MOLD ALRORITHM    #########################
 
-            correct:bool = False
-
-            #TO FIX -> MANAGE MULTIPLE FORMAT AND EXPECTING THEM
+            formats: list = cmd_import.context['format']
+            correct: bool = False
             
             #loop through every format
-            for format in cmd_import.context['format']:
+            for findex, format in enumerate(formats):
 
-                print(f"format: {format}, content: {content}")
-
-                if len(format) == 0 and len(content) == 0:
+                if len(format) + len(content) == 0:
                     correct = True
-                    break 
+                    break
+
+                if findex == len(formats) - 1:
+                    if len(format) != len(content):
+                        break
+                else:
+                    if len(format) != len(content):
+                        continue
 
                 #compare format[i] to given 
-                for index in range(len(content)):
-                    given = content[index].lower()
-                    expected = format[index]
+                for cindex in range(len(content)):
+                    given = content[cindex].lower()
+                    expected = format[cindex]
 
                     #MAKE "ALL" CONVERSION TO MAX BIT
                     if given == "all":
                         given = str(pfunc.get_profile(message.author.id)['bit'])
 
-                    if mention and given == f"<@{mention.id}>": #GIVEN MENTION
+                    if message.mentions and given == f"<@{message.mentions[0].id}>": #GIVEN MENTION
 
-                        if not pfunc.get_profile(mention.id):
-                            return await message.channel.send(f"**{mention.name}** doesn't have a profile")
+                        if not pfunc.get_profile(message.mentions[0].id):
+                            return await message.channel.send(f"**{message.mentions[0].name}** doesn't have a profile")
 
-                        if expected == "M": pass_mention = mention
+                        if expected == "M": 
+                            pass_mention = message.mentions[0]
+
+                            if message.mentions[0].id == message.author.id:
+                                return await message.channel.send("you don't execute a command on yourself bozo")
+
                         else: return await message.channel.send(f"ERROR: WAS NOT EXPECTING MENTION")
 
                     elif given.isdigit(): #GIVEN INT
@@ -109,14 +114,14 @@ async def on_message(message: discord.Message):
                         if expected == "S": pass_args.append(str(given))
                         else: return await message.channel.send("ERROR: WAS NOT EXPECTING STRING")
 
-                    if index == len(content) - 1:
+                    if cindex == len(content) - 1:
                         correct = True
                         break
 
-                if correct:
+                if correct == True:
                     break
 
-            if correct != True:
+            if correct == False:
                 return await message.channel.send("INVALID FORMAT")
 
             ######################################################################
@@ -130,9 +135,11 @@ async def on_message(message: discord.Message):
             print(f"user: {message.author.name}")
             print(f"cmd: {message.content}")
             print(f"args: {pass_args}")
-            print(f"mention: {pass_mention}\n")
+            print(f"mention: {pass_mention}")
+            print(f"format: {formats[findex]}")
+            print(f"format index: {findex}\n")
 
             #sends: discord module, bot, current message, mention's id, args
-            return await cmd_import.cmd(discord, bot, message, pass_mention, pass_args)
+            return await cmd_import.cmd(bot, message, pass_mention, pass_args, findex)
 
 bot.run(TOKEN) 

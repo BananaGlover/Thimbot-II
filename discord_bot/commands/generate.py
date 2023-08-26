@@ -10,8 +10,8 @@ context = {
     "admin": True
 }
 
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mention: discord.Message.mentions, args: list[int]):
-
+async def cmd(bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int], format: int):
+    
     self = pfunc.get_profile(message.author.id)
     self['bit'] += args[0]
     pfunc.modify_profile(self)

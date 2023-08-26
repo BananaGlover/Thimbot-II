@@ -10,8 +10,8 @@ context = {
     "admin": False
 }
 
-async def cmd(discord: discord, bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int]):
-
+async def cmd(bot:discord.Client, message: discord.Message, mention: discord.Member, args: list[int], format: int):
+    
     #initialise variables
     self = pfunc.get_profile(message.author.id)
     target = pfunc.get_profile(mention.id)
